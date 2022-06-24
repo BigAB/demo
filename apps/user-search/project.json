@@ -1,0 +1,96 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/user-search/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/user-search",
+        "index": "apps/user-search/src/index.html",
+        "baseHref": "/",
+        "main": "apps/user-search/src/main.tsx",
+        "polyfills": "apps/user-search/src/polyfills.ts",
+        "tsConfig": "apps/user-search/tsconfig.app.json",
+        "assets": [
+          "apps/user-search/src/favicon.ico",
+          "apps/user-search/src/assets"
+        ],
+        "styles": ["apps/user-search/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/user-search/src/environments/environment.ts",
+              "with": "apps/user-search/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "user-search:build",
+        "hmr": true,
+        "port": 3000
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "user-search:build:development"
+        },
+        "production": {
+          "buildTarget": "user-search:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/user-search/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/user-search"],
+      "options": {
+        "jestConfig": "apps/user-search/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/user-search/e2e/cypress.json",
+        "devServerTarget": "user-search:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "user-search:serve:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

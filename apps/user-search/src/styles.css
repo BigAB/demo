@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+:root,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+:root {
+  height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  background-color: honeydew;
+}
+
+#app-root {
+  display: flex;
+  flex-direction: column;
+}
