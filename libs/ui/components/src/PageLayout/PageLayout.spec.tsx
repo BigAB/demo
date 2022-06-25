@@ -1,10 +1,9 @@
-import { render } from '@testing-library/react';
-
+import { render, screen } from '@testing-library/react';
 import PageLayout from './PageLayout';
 
 describe('PageLayout', () => {
-  it('should render successfully', () => {
-    const { baseElement } = render(<PageLayout />);
-    expect(baseElement).toBeTruthy();
+  it('should render successfully', async () => {
+    render(<PageLayout>Content</PageLayout>);
+    expect(await screen.findByText('Content')).toBeInTheDocument();
   });
 });

@@ -11,12 +11,7 @@ const StyledPageLayout = styled.div`
 `;
 
 export function PageLayout({ children }: PageLayoutProps) {
-  return (
-    <StyledPageLayout>
-      <h1>THIS IS A PageLayout!</h1>
-      {children}
-    </StyledPageLayout>
-  );
+  return <StyledPageLayout>{children}</StyledPageLayout>;
 }
 
 export default PageLayout;
