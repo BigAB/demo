@@ -1,9 +1,23 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './App.module.css';
-
+import { Octokit } from 'octokit';
 import { Route, Routes, Link } from 'react-router-dom';
-
 import { PageLayout } from '@demo/ui/components';
+// import styles from './App.module.css';
+
+const octokit = new Octokit({});
+
+const getIt = async () => {
+  try {
+    const result = await octokit.request('GET /search/users', {
+      q: 'bigab',
+      page: 4,
+    });
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 export function App() {
   return (
@@ -20,6 +34,8 @@ export function App() {
             <Link to="/page-2">Page 2</Link>
           </li>
         </ul>
+
+        <button onClick={() => getIt()}>FETCH</button>
       </div>
       <Routes>
         <Route

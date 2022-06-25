@@ -1,5 +1,5 @@
 {
-  "name": "@demo/domain/user",
+  "name": "@demo/domain",
   "version": "0.0.1",
   "type": "commonjs"
 }

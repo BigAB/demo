@@ -2,7 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "domain-user": "libs/domain/user",
+    "domain": "libs/domain",
     "services-users": "libs/services/users",
     "stores-user": "libs/stores/user",
     "ui-components": "libs/ui/components",

@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@demo/domain/user": ["libs/domain/user/src/index.ts"],
+      "@demo/domain": ["libs/domain/src/index.ts"],
+      "@demo/libs-temp": ["libs/libs/temp/src/index.ts"],
       "@demo/services/users": ["libs/services/users/src/index.ts"],
       "@demo/stores/user": ["libs/stores/user/src/index.ts"],
       "@demo/ui/components": ["libs/ui/components/src/index.ts"]
