@@ -1,1 +1,1 @@
-export * from './lib/stores-user';
+export * from './lib/users';

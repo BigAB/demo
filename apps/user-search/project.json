@@ -19,7 +19,7 @@
           "apps/user-search/src/favicon.ico",
           "apps/user-search/src/assets"
         ],
-        "styles": ["apps/user-search/src/styles.css"],
+        "styles": ["libs/ui/base-styles/base-styles.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },

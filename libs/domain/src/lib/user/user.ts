@@ -57,6 +57,14 @@ export const isUser = (obj: unknown): obj is User => {
   return (
     typeof obj === 'object' &&
     obj !== null &&
-    requiredProperties.every((prop) => prop in obj)
+    requiredProperties.every((prop) => prop in obj) // &&
+    // requiredProperties
+    //   .filter((prop) => prop.endsWith('_url'))
+    //   .every(
+    //     (prop) =>
+    //       prop in obj &&
+    //       typeof obj[prop] === 'string' &&
+    //       obj[prop].startsWith('https://')
+    //   )
   );
 };
