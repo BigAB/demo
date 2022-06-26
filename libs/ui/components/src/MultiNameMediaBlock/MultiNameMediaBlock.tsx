@@ -5,10 +5,10 @@ interface Props {
   link?: string;
   imageSrc?: string;
   imageAlt?: string;
-  name: string;
+  name?: string;
   secondaryName?: string;
-  desc?: string;
-  tags?: readonly (string | [string, string])[];
+  desc?: string | null;
+  tags?: readonly (string | readonly [string, string])[];
 }
 
 export const MultiNameMediaBlock = ({
@@ -32,11 +32,13 @@ export const MultiNameMediaBlock = ({
     <Content>
       <Names>
         {secondaryName && (
-          <SecondaryName href="/BigAB">{secondaryName}</SecondaryName>
+          <SecondaryName href={link}>{secondaryName}</SecondaryName>
         )}
-        <PrimaryName href={link}>
-          <em>{name}</em>
-        </PrimaryName>
+        {name && (
+          <PrimaryName href={link}>
+            <em>{name}</em>
+          </PrimaryName>
+        )}
       </Names>
 
       <Description>{desc}</Description>

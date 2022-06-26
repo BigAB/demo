@@ -4,6 +4,7 @@
   "projects": {
     "domain": "libs/domain",
     "services-users": "libs/services/users",
+    "stores-base-store": "libs/stores/base-store",
     "stores-user": "libs/stores/user",
     "ui-components": "libs/ui/components",
     "user-search": "apps/user-search"

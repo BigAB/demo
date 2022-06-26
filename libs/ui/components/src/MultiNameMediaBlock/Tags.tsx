@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface Props {
-  data: readonly (string | [string, string])[];
+  data: readonly (string | readonly [string, string])[];
 }
 
 export const Tags = ({ data }: Props) => (

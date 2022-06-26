@@ -3,6 +3,7 @@ import { Pagination } from './Pagination';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface Props<T extends { id?: any }> {
+  title?: string;
   items: readonly T[];
   pagination: {
     page: number;
@@ -14,6 +15,7 @@ interface Props<T extends { id?: any }> {
 }
 
 export const PaginatedList = function <ItemType>({
+  title,
   items,
   pagination,
   renderItem,
@@ -21,6 +23,7 @@ export const PaginatedList = function <ItemType>({
 }: Props<ItemType>) {
   return (
     <>
+      {title ? <Title>{title}</Title> : null}
       <Ul>
         {items.map((item) => (
           <Li key={mapItemToKey(item)}>{renderItem(item)}</Li>
@@ -43,6 +46,10 @@ const Li = styled.li`
   border-top-color: #d8dee4;
   border-top-style: solid;
   border-top-width: 1px;
+`;
+
+const Title = styled.h3`
+  margin: auto;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

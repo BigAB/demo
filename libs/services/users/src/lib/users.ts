@@ -1,18 +1,39 @@
 import { Octokit } from 'octokit';
-import { User, isUser } from '@demo/domain';
+import { User } from '@demo/domain';
 const octokit = new Octokit({});
 
 interface Query {
   username: string;
 }
 
+interface ListResponse {
+  items: User[];
+  total_count: number;
+}
+
 export const getPaginatedList = async (
   query: Query,
   page: number
-): Promise<readonly User[]> => {
-  const result = await octokit.request('GET /search/users', {
+): Promise<ListResponse> => {
+  const result = await octokit.rest.search.users({
     q: query.username,
     page,
+    per_page: 5,
   });
-  return result.data.items.filter(isUser) as readonly User[];
+
+  const detailedUsers = await Promise.all(
+    result.data.items.map(({ login }) =>
+      octokit.rest.users.getByUsername({ username: login })
+    )
+  );
+  result.data.items = result.data.items.map((user, i) => ({
+    ...user,
+    ...detailedUsers[i].data,
+  }));
+  return result.data;
+};
+
+export const getUser = async (username: string): Promise<User> => {
+  const result = await octokit.rest.users.getByUsername({ username });
+  return result.data;
 };

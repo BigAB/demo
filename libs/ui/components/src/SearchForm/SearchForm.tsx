@@ -58,7 +58,7 @@ const Container = styled.div`
   max-width: 932px;
   padding: 2rem;
   @media (max-width: 768px) {
-    padding: 0;
+    padding: 0 1rem 1rem;
   }
 `;
 
@@ -126,9 +126,9 @@ const Button = styled.button`
 
 const HelperText = styled.p`
   margin: auto;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   @media (max-width: 768px) {
     font-weight: normal;
-    font-size: 0.6rem;
+    font-size: 0.4rem;
   }
 `;

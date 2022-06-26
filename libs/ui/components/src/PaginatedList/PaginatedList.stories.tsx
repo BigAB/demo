@@ -20,10 +20,6 @@ const Template: ComponentStory<typeof PaginatedList<MNMBProps>> = (args) => (
 
 export const Primary = Template.bind({});
 
-interface HasName {
-  name: string;
-}
-
 Primary.args = {
   items: [
     {
@@ -40,7 +36,7 @@ Primary.args = {
       id: 2,
       name: 'Jane Doe',
       imageSrc: 'https://avatars.githubusercontent.com/u/12821714?v=4',
-      tags: [['dope af', 'https://dope.af']],
+      tags: [['Rocking Kicks', 'https://google.ca']],
     },
   ],
   pagination: {
@@ -48,5 +44,5 @@ Primary.args = {
     totalPages: 10,
     onChange: (page: number) => console.log(page),
   },
-  renderItem: (item: HasName) => <MultiNameMediaBlock {...item} />,
+  renderItem: (item) => <MultiNameMediaBlock {...item} />,
 };

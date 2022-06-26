@@ -17,6 +17,7 @@
     "react-is": "18.2.0",
     "react-router-dom": "6.3.0",
     "regenerator-runtime": "0.13.7",
+    "rxjs": "^7.5.5",
     "styled-components": "5.3.5",
     "tslib": "^2.3.0"
   },
