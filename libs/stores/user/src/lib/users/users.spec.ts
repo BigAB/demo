@@ -8,15 +8,35 @@ describe('UsersStore', () => {
     expect(new UsersStore(mockUserService)).toBeInstanceOf(UsersStore);
   });
 
-  it('should fetch users as soon as it is subscribed to', async () => {
+  it('should fetch users when search is performed', async () => {
     const mockUserService = createMockUsersService();
     const store = new UsersStore(mockUserService);
     const callback = jest.fn();
 
     const unsubscribe = store.subscribe(callback);
-    mockUserService.resolve({ items: [mockUser], total_count: 1001 });
+
+    store.searchUsersByUsername('test');
 
     expect(mockUserService.getPaginatedList).toHaveBeenCalledTimes(1);
+
+    expect(callback).toHaveBeenCalledWith({
+      pagination: { page: 1, totalPages: 0 },
+      status: 'ready',
+      users: undefined,
+      usersCount: 0,
+    });
+
+    mockUserService.resolve({ items: [mockUser], total_count: 1001 });
+    await Promise.resolve();
+    expect(callback.mock.calls[1]).toEqual([
+      {
+        pagination: { page: 1, totalPages: 201 },
+        status: 'ready',
+        users: [mockUser],
+        usersCount: 1001,
+      },
+    ]);
+
     unsubscribe();
   });
 });

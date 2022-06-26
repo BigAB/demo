@@ -1,7 +1,7 @@
-import { storesBaseStore } from './base-store';
+import { BaseStore } from './base-store';
 
-describe('storesBaseStore', () => {
+describe('BaseStore', () => {
   it('should work', () => {
-    expect(storesBaseStore()).toEqual('stores-base-store');
+    expect(BaseStore).toBeDefined();
   });
 });
