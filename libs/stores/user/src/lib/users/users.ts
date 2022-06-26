@@ -70,11 +70,11 @@ export class UsersStore extends BaseStore<State> {
     );
   }
 
-  updatePagination(
+  updatePagination = (
     updateFn: (state: State['pagination']) => State['pagination']
-  ) {
+  ) => {
     this.pagination$.next(updateFn(this.pagination$.value));
-  }
+  };
 
   searchUsersByUsername = (username: string) => this.searches$.next(username);
 }
