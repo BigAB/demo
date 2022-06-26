@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "domain": "libs/domain",
+    "react-utils": "libs/react-utils",
     "services-users": "libs/services/users",
     "stores-base-store": "libs/stores/base-store",
     "stores-user": "libs/stores/user",

@@ -21,6 +21,7 @@ const Template: ComponentStory<typeof PaginatedList<MNMBProps>> = (args) => (
 export const Primary = Template.bind({});
 
 Primary.args = {
+  title: 'Some Users',
   items: [
     {
       id: 1,

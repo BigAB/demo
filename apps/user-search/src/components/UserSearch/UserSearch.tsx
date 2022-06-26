@@ -1,4 +1,3 @@
-import { useSyncExternalStore } from 'react';
 import {
   SearchForm,
   PaginatedList,
@@ -7,6 +6,7 @@ import {
 import { UsersStore } from '@demo/stores/user';
 import { usersService } from '@demo/services/users';
 import { User } from '@demo/domain';
+import { useStore } from '@demo/react-utils';
 
 const mapUserToMediaBlockProps = (user: User) => ({
   id: user.id,
@@ -25,24 +25,25 @@ const mapUserToMediaBlockProps = (user: User) => ({
 const usersStore = new UsersStore(usersService);
 
 export const UserSearch = () => {
-  const handleChange = (page: number) =>
-    usersStore.updatePagination((p) => ({ ...p, page }));
+  const [
+    { users, usersCount, pagination },
+    { updatePagination, searchUsersByUsername },
+  ] = useStore(usersStore);
 
-  const storeState = useSyncExternalStore(
-    usersStore.subscribe,
-    usersStore.getSnapshot
-  );
-
-  const users = storeState.users?.map(mapUserToMediaBlockProps);
+  const userData = users?.map(mapUserToMediaBlockProps);
 
   return (
     <>
-      <SearchForm onSearch={usersStore.searchUsersByUsername} />
-      {users && users.length > 0 && (
+      <SearchForm onSearch={searchUsersByUsername} />
+      {userData && userData.length > 0 && (
         <PaginatedList
-          items={users}
-          title={`${storeState.usersCount} users found`}
-          pagination={{ onChange: handleChange, ...storeState.pagination }}
+          items={userData}
+          title={`${usersCount} users found`}
+          pagination={{
+            onChange: (page: number) =>
+              updatePagination((p: object) => ({ ...p, page })),
+            ...pagination,
+          }}
           renderItem={(item) => <MultiNameMediaBlock {...item} />}
         />
       )}

@@ -6,7 +6,8 @@
     "dev": "nx serve --port 3000",
     "dev:ui-components": "npx nx run ui-components:storybook",
     "test": "nx test",
-    "e2e": "nx affected --target=e2e"
+    "e2e": "nx affected --target=e2e",
+    "storybook": "nx run ui-components:storybook"
   },
   "private": true,
   "dependencies": {
