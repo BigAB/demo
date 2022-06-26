@@ -26,7 +26,6 @@ export const useStore = <T>(store: Store<T>) => {
         actions[key] = store[key];
       }
     }
-    console.log('actions', actions);
     return actions;
   }, [store]);
 
