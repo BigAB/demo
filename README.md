@@ -1,5 +1,7 @@
 # Web Application Architecture demo
 
+user-search app deployed to: https://friendly-lily-d8edd0.netlify.app/
+
 This is a small app to demonstrate the following Web Application Architecture:
 
 ![Web Application Architecture Visualization](./Web%20Application%20Architecture.png)
