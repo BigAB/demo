@@ -19,16 +19,27 @@ describe('UsersStore', () => {
 
     expect(mockUserService.getPaginatedList).toHaveBeenCalledTimes(1);
 
-    expect(callback).toHaveBeenCalledWith({
-      pagination: { page: 1, totalPages: 0 },
-      status: 'ready',
-      users: undefined,
-      usersCount: 0,
-    });
+    expect(callback.mock.calls[0]).toEqual([
+      {
+        pagination: { page: 1, totalPages: 0 },
+        status: 'ready',
+        users: undefined,
+        usersCount: 0,
+      },
+    ]);
 
     mockUserService.resolve({ items: [mockUser], total_count: 1001 });
-    await Promise.resolve();
+
     expect(callback.mock.calls[1]).toEqual([
+      {
+        pagination: { page: 1, totalPages: 0 },
+        status: 'pending',
+        users: undefined,
+        usersCount: 0,
+      },
+    ]);
+    await Promise.resolve(); // wait a tick!
+    expect(callback.mock.calls[2]).toEqual([
       {
         pagination: { page: 1, totalPages: 201 },
         status: 'ready',

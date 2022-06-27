@@ -6,7 +6,12 @@ import {
   distinctUntilChanged,
   BehaviorSubject,
   combineLatest,
-  startWith,
+  from,
+  concat,
+  Observable,
+  of,
+  withLatestFrom,
+  catchError,
 } from 'rxjs';
 import { User } from '@demo/domain';
 import { BaseStore } from '@demo/stores/base-store';
@@ -23,10 +28,12 @@ interface State {
 }
 
 const defaultState: State = {
-  status: 'pending',
+  status: 'ready',
+  users: undefined,
+  usersCount: 0,
   pagination: {
     page: 1,
-    totalPages: 10,
+    totalPages: 0,
   },
 };
 
@@ -40,7 +47,7 @@ interface UsersService {
 export class UsersStore extends BaseStore<State> {
   private readonly searches$ = new Subject<string>();
   private readonly pagination$ = new BehaviorSubject(defaultState.pagination);
-  private searchResults$;
+  private searchResults$: Observable<Partial<State>>;
 
   constructor(private readonly usersService: UsersService) {
     super(defaultState);
@@ -49,21 +56,35 @@ export class UsersStore extends BaseStore<State> {
       distinctUntilChanged(),
       combineLatestWith(this.searches$.pipe(distinctUntilChanged())),
       switchMap(([page, search]) => {
-        return this.usersService.getPaginatedList({ username: search }, page);
+        return concat(
+          of({ status: 'pending' as const }),
+          from(
+            this.usersService.getPaginatedList({ username: search }, page)
+          ).pipe(
+            map((response) => ({
+              status: 'ready' as const,
+              users: response.items,
+              usersCount: response.total_count,
+            })),
+            catchError((err) => {
+              return of({ status: 'error' as const, errors: [err.message] });
+            })
+          )
+        );
       })
     );
     this.internalState$ = combineLatest([
-      this.searchResults$.pipe(startWith({ items: undefined, total_count: 0 })),
+      this.searchResults$,
       this.pagination$,
     ]).pipe(
-      map(([searchResults, pagination]) => {
+      withLatestFrom(this.state$),
+      map(([[searchResults, pagination], state]) => {
         return {
-          status: 'ready',
-          users: searchResults?.items,
-          usersCount: searchResults?.total_count,
+          ...state,
+          ...searchResults,
           pagination: {
             page: pagination.page,
-            totalPages: Math.ceil(searchResults?.total_count / 5),
+            totalPages: Math.ceil((searchResults?.usersCount || 0) / 5),
           },
         };
       })

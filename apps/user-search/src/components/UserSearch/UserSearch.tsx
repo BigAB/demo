@@ -26,7 +26,7 @@ const usersStore = new UsersStore(usersService);
 
 export const UserSearch = () => {
   const [
-    { users, usersCount, pagination },
+    { users, usersCount, pagination, errors, status },
     { updatePagination, searchUsersByUsername },
   ] = useStore(usersStore);
 
@@ -35,18 +35,18 @@ export const UserSearch = () => {
   return (
     <>
       <SearchForm onSearch={searchUsersByUsername} />
-      {userData && userData.length > 0 && (
-        <PaginatedList
-          items={userData}
-          title={`${usersCount} users found`}
-          pagination={{
-            onChange: (page: number) =>
-              updatePagination((p: object) => ({ ...p, page })),
-            ...pagination,
-          }}
-          renderItem={(item) => <MultiNameMediaBlock {...item} />}
-        />
-      )}
+      <PaginatedList
+        items={userData}
+        title={`${usersCount} users found`}
+        pagination={{
+          onChange: (page: number) =>
+            updatePagination((p: object) => ({ ...p, page })),
+          ...pagination,
+        }}
+        renderItem={(item) => <MultiNameMediaBlock {...item} />}
+        errors={errors}
+        status={status}
+      />
     </>
   );
 };
