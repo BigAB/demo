@@ -27,3 +27,5 @@ Still todo...
 - add proper tests and CI
 - add separate framework implementations (Svelte, Vue, Angular, etc) sharing as much code as reasonable
 - add better adapter utils for each fromwork, like a Hook/Provider pair for stores in the React implementation
+
+_*this is just a change to test out my signing commit feature from my new computer*_
